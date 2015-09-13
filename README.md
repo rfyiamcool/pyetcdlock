@@ -1,11 +1,14 @@
 ### 创建连接
 
+ttl是expire过期时间,这样可以指定锁定的时间
+renew是再加点锁定的ttl时间
+
 ```python
 import etcd
 from pyetcdnetlock import Lock
 
-client = client = etcd.Client(host='api.example.com', protocol='https', port=443, version_prefix='/etcd')
-lock = Lock(client, 'path/to/my/key', ttl=30, renewSecondsPrior=)
+client = client = etcd.Client(host='127.0.0.1')
+lock = Lock(client, 'path/to/my/key', ttl=30, renewSecondsPrior=5)
 ```
 
 ###  使用方法
