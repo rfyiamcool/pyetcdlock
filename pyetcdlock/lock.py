@@ -35,7 +35,8 @@ class Lock(object):
         return self.release()
 
     def force_acquire(self):
-        self.client.write(self.key,token,ttl=0)
+        self.client.write(self.key,self.token,ttl=0)
+        self.token = None
 
     def acquire(self, **kwargs):
         token = str(uuid.uuid4())
