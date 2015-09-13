@@ -1,7 +1,7 @@
 #coding:utf-8
 import etcd
 import uuid
-from threading import Timer
+import threading
 
 class Lock(object):
 
@@ -27,6 +27,14 @@ class Lock(object):
         self._index = None
         self.token = None
         self.timeout = timeout
+        threading.Thread(target=self.watch_key).start()
+
+    def watch_key():
+        for event in self.client.eternal_watch(self.key,recursive = True):
+            if event.action == "expire":
+                self.client.write(self.key,self.token,ttl=0)
+                self.token = None
+                
 
     def __enter__(self):
         return self.acquire()
@@ -66,13 +74,13 @@ class Lock(object):
         if self.renewSecondsPrior is not None:
             def renew():
                 if (self.renew()):
-                    Timer(self.ttl, self.renew)
-            Timer(self.ttl - self.renewSecondsPrior, lambda: self.renew())
+                    threading.Timer(self.ttl, self.renew)
+            threading.Timer(self.ttl - self.renewSecondsPrior, lambda: self.renew())
         else:
             def cleanup():
                 if self.token is token:
                     self.token = None
-            Timer(self.ttl, cleanup)
+            threading.Timer(self.ttl, cleanup)
 
         return True
 
