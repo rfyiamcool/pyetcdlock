@@ -27,6 +27,6 @@ setup(name='pyetcdlock',
     author_email='rfyiamcool@163.com',
     url='https://github.com/rfyiamcool',
     license='MIT',
-    packages=['netlock'],
+    packages=['pyetcdlock'],
     install_requires=install_requires,
 )
