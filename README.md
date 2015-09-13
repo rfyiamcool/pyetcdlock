@@ -1,9 +1,29 @@
-### 创建连接
+#pyetcdlock
+
+### 安装方法
+
+```
+git clone https://github.com/rfyiamcool/pyetcdlock.git
+cd pyetcdlock
+python setup.py
+```
+
+```
+pip instlal pyetcdlock
+```
+
+说明:
 
 ttl是expire过期时间,这样可以指定锁定的时间
+
 renew是再加点锁定的ttl时间
 
-```python
+force_acquire  强制获取锁
+
+
+### 创建连接
+
+```
 import etcd
 from pyetcdnetlock import Lock
 
@@ -15,9 +35,7 @@ lock = Lock(client, 'path/to/my/key', ttl=30, renewSecondsPrior=5)
 
 ```
 if lock.acquire(timeout=20):
-    t = Thread(target=someheavywork)
-    t.run()
-    t.wait()
+    # some work
     lock.renew()
     # some other work
     lock.release() 
@@ -35,3 +53,4 @@ with lock as l:
     l.renew()
     # some other work
 ```
+
