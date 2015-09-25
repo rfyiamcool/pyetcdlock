@@ -84,10 +84,11 @@ class Lock(object):
 
         return True
 
-    def renew(self):
+    def renew(self,ttl=None):
+        ttl = ttl if ttl else self.ttl 
         if (self.token is not None):
             try:
-                self.client.test_and_set(self.key, self.token, self.token, ttl=self.ttl)
+                self.client.test_and_set(self.key, self.token, self.token, ttl=ttl)
                 return True
             except ValueError, e:
                 self.token = None
