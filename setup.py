@@ -4,7 +4,7 @@ import os
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-version = '1.2.0'
+version = '1.3.1'
 
 install_requires = [
     'python-etcd'
