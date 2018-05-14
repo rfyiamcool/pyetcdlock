@@ -1,9 +1,10 @@
-#pyetcdlock
+# pyetcdlock
 
 基于etcd的分布式锁，简单说就是利用etcd.test_and_set函数来判断lock key是否被占用，存在那就说明有人占用。在创建key的时候加入了ttl，防止因为进程异常退出而没有释放锁。
 
 更新:
 支持指定renew时间
+
 ```
 renew(ttl=3)
 ```
